@@ -31,7 +31,7 @@ a. Given the Animal class below, create a Bird subclass with a new `canFly` prop
 ```swift
 class Animal {
     var name: String = ""
-    var printDescription() {
+    func printDescription() {
         print("I am an animal named \(name)")
     }
 }
