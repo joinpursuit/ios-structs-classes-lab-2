@@ -73,7 +73,7 @@ class Shape {
 
 a. Given the `Shape` object above, create a subclass `Square` with a property `sideLength` with a default value of 5.
 
-b. Override the `area` and `perimeter` computed values so the return the area/perimeter of the square as appropriate
+b. Override the `area` and `perimeter` computed values so it returns the area/perimeter of the square as appropriate
 
 c. Override the `name` property of `Square` so that it returns a String containing its name ("Square") and its area and perimeter
 
