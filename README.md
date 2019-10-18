@@ -233,7 +233,7 @@ for shape in myShapes {
 }
 ```
 ```
-When the code below is run, each shape will output it's respective overriden name, area, and perimeter computed properties. For the purposes of being appended to the Shpae array, and because they inherited from the Shape superclass, Rectangle and Square are Shapes. However, they are also both a Square and a Rectangle respectively, which each contain their own implementation of the area, perimeter, and name computed properties. When they are accessed we see each subclass's implementation of these properties. This is a result of polymoprhism.
+When the code below is run, each shape will output its respective overriden name, area, and perimeter computed properties. For the purposes of being appended to the Shape array, and because they inherited from the Shape superclass, Rectangle and Square are Shapes. However, they are also both a Square and a Rectangle respectively, which each contain their own implementation of the area, perimeter, and name computed properties. When they are accessed we see each subclass's implementation of these properties. This is a result of polymoprhism.
 ```
 
 ## Question 6
