@@ -74,7 +74,7 @@ class Bird: Animal{
     
     override func printDescription(){
         if canFly{
-            print("I am a bird named \(name) and I have ability to fly.")
+            print("I am a bird named \(name) and I have the ability to fly.")
         } else {
             print("I am a bird named \(name) and I cannot fly.")
         }
