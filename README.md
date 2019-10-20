@@ -12,7 +12,10 @@ struct Room {
      let width: Double
 }
 ```
+```swift
+var flex = Room(maxOccupancy: 10, length: 5, width: 2)
 
+```
 ## Question 2
 
 Using the Bike class below, write code that demonstrates that it is a reference type.
@@ -23,7 +26,12 @@ class Bike {
     var hasBell = false
 }
 ```
-
+```swift
+var bikeA = Bike()
+var bikeB = bikeA
+bikeA.wheelNumber = 3
+print(bikeB.wheelNumber)
+```
 ## Question 3
 
 a. Given the Animal class below, create a Bird subclass with a new `canFly` property.
@@ -35,6 +43,15 @@ class Animal {
         print("I am an animal named \(name)")
     }
 }
+```
+```swift
+class Bird: Animal {
+var canFly = Bool()
+    override func printDescription() {
+        print("bird named \(name) can fly? \(canFly)")
+    }
+}
+
 ```
 
 b. Override the printDescription method to have the instance of the Bird object print out its name and whether it can fly
@@ -54,7 +71,19 @@ class Bike {
   }
 }
 ```
+```swift
+class LoudBike: Bike {
+override func ringBell() {
+print("RING!")
+}
+    func ringBell(times: Int) {
+        for _ in 1...times {
+            print("RING!")
+        }
+    }
+}
 
+```
 
 a. Create a `LoudBike` subclass of Bike.  When you call `ringBell` it should ring the bell in all caps.
 
@@ -69,6 +98,22 @@ class Shape {
     var area: Double { fatalError("Subclasses must override the area") }
     var perimeter: Double { fatalError("Subclasses must override the perimeter") }
 }
+```
+```swift
+class Square: Shape {
+    var sideLength: Double = 5
+    override var name: String { return "Squares area is \(area), perimeter is \(perimeter)"}
+    override var area: Double { return sideLength * sideLength}
+    override var perimeter: Double { return 4 * sideLength}
+    
+}
+
+class Rectangle: Shape {
+    var width: Double = 6
+    var height: Double = 4
+    override var name: String { return "Rectangle area is \(area), perimeter is \(perimeter)"}
+}
+
 ```
 
 a. Given the `Shape` object above, create a subclass `Square` with a property `sideLength` with a default value of 5.
@@ -93,6 +138,7 @@ for shape in myShapes {
     print("This is a \(shape.name) with an area of \(shape.area) and a perimeter of \(shape.perimeter)")
 }
 ```
+wont run because rectangle did not override area and perimeter
 
 ## Question 6
 
@@ -114,6 +160,9 @@ struct Point {
     let y: Double
     func distance(to point: Point) -> Double {
       //Code in your answer here
+      let horizontal = self.x - point.x
+      let vertical = self.y - point.y
+      return sqrt(horizontal * horizontal + vertical * vertical)
     }
 }
 
@@ -130,7 +179,19 @@ b. Given the above Point object, and Circle object below, add a `contains` metho
 struct Circle {
     let radius: Double
     let center: Point
-}
+    func contains(point: Point) -> Bool{
+    if center.distance(to: point) <=  radius {
+        return true
+    }else{
+        return false
+    }
+    }
+    func randomPoint() -> Point {
+        let x = Double.random(in: -radius...radius)
+        let y = sqrt(pow(self.radius, 2) - pow(x, 2))
+        return Point(x: x,y: y)
+    }
+    }
 
 let pointOne = Point(x: 0, y: 0)
 let circleOne = Circle(radius: 5, center: pointOne)
@@ -158,7 +219,42 @@ circleOne.contains(circleOne.getRandomPoint()) //Should always be true
 ## Question 7
 
 a. Create a struct called HangmanModel with 3 properties `targetWord: String`, `numberOfIncorrectGuesses: Int` and `guessedLetters: [Character]`.
-
+```swift
+struct HangmanModel {
+var targetWord = String()
+var numberOfIncorrectGuesses = Int()
+var guessedLetters = [Character]()
+func playerWon() -> Bool {
+for char in self.targetWord {
+    if !self.guessedLetters.contains(char){
+        return false
+        }
+    }
+    return true
+}
+func printDisplayVersionOfWord() -> Void {
+    for char in self.targetWord {
+        if self.guessedLetters.contains(char) {
+            print(char, terminator: "")
+        } else {
+            print("_", terminator: "")
+        }
+    }
+}
+mutating func guess(charGuess: Character) {
+    let charSet: Set<Character> = Set(self.targetWord)
+    self.guessedLetters.append(charGuess)
+    if !charSet.contains(charGuess) {
+    numberOfIncorrectGuesses += 1
+    }
+    self.printDisplayVersionOfWord()
+    print("\nNumber of wrong guesses: \(self.numberOfIncorrectGuesses)\n")
+    if playerWon() {
+        print("You Win")
+   }
+}
+}
+```
 b. Add a method called `playerWon` that returns whether all of the characters in `targetWord` are in `guessedLetters`
 
 ```swift
