@@ -12,6 +12,8 @@ struct Room {
      let width: Double
 }
 ```
+Have to read it again
+
 
 ## Question 2
 
