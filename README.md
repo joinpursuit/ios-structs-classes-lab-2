@@ -13,6 +13,11 @@ struct Room {
 }
 ```
 
+My code:
+```swift
+let emptyRoom = Room(maxOccupanyc: 0, length: 100, width: 40)
+```
+
 ## Question 2
 
 Using the Bike class below, write code that demonstrates that it is a reference type.
@@ -22,6 +27,16 @@ class Bike {
     var wheelNumber = 2
     var hasBell = false
 }
+```
+
+My code:
+```swift
+let bike = Bike()
+let otherBike = bike
+bike.wheelNumber = 3
+bike.hasBell = true
+print(otherBike.wheelNumber)
+print(otherBike.hasBell)
 ```
 
 ## Question 3
@@ -37,8 +52,25 @@ class Animal {
 }
 ```
 
+My code:
+```swift
+
+class Bird: Animal {
+    var canFly = true
+}
+```
+
 b. Override the printDescription method to have the instance of the Bird object print out its name and whether it can fly
 
+```swift
+
+class Bird: Animal {
+    var canFly = true
+    override func printDescription() {
+        print("It is \(canFly) that \(name) can fly")
+    }
+}
+```
 
 ## Question 4
 
@@ -58,7 +90,33 @@ class Bike {
 
 a. Create a `LoudBike` subclass of Bike.  When you call `ringBell` it should ring the bell in all caps.
 
+```
+class LoudBike: Bike {
+    override func ringBell() {
+        if hasBell() {
+           print("RING!") 
+        }
+    }
+}
+```
+
 b. Give `LoudBike` a new method called `ringBell(times:)` that rings the bell a given number of times
+
+```
+class LoudBike: Bike {
+    override func ringBell() {
+        if hasBell() {
+           print("RING!") 
+        }
+    }
+    
+    func ringBell(time: Int) {
+        for _ in 1...times {
+            print("RING!")
+        }
+    }
+}
+```
 
 
 ## Question 5
@@ -73,14 +131,51 @@ class Shape {
 
 a. Given the `Shape` object above, create a subclass `Square` with a property `sideLength` with a default value of 5.
 
+```swift
+
+class Shape: Square {
+    var sideLength = 5
+}
+```
+
 b. Override the `area` and `perimeter` computed values so it returns the area/perimeter of the square as appropriate
 
+```
+class Square: Shape {
+    var sideLength = 5
+    override var area: Double {return Double(sideLength * sideLength)}
+    override var perimeter: Double {return Double(sideLength * 4)}
+}
+```
 c. Override the `name` property of `Square` so that it returns a String containing its name ("Square") and its area and perimeter
 
+```swift
+class Square: Shape {
+    var sideLength = 5
+    override var name:String {return "This a square with an area of \(area) and a perimeter of \(perimeter)"}
+    override var area: Double {return Double(sideLength * sideLength)}
+    override var perimeter: Double {return Double(sideLength * 4)}
+}
+```
 d. Create a class `Rectangle` that subclasses from `Shape`.  Give it a `width` property with a default value of 6 and a `height` property with a default value of 4
 
+```swift
+class Rectangle: Shape {
+    var width = 6
+    var height = 4
+}
+```
 e. Override the `name` property of `Rectangle` so that it returns a String containing its name ("Rectangle") and its area and perimeter.
 
+```swift
+class Rectangle: Shape {
+    var width = 6
+    var height = 4
+    override var name:String {return "This a rectangle with an area of \(area) and a perimeter of \(perimeter)"}
+    override var area: Double {return Double(width * height)}
+    override var perimeter: Double {return Double((width + height) * 2)}
+}
+```
 f. (BONUS) What happens when you run the code below?  Explain why.
 
 ```swift
@@ -93,6 +188,8 @@ for shape in myShapes {
     print("This is a \(shape.name) with an area of \(shape.area) and a perimeter of \(shape.perimeter)")
 }
 ```
+The code above will compile (as intended) as the print statement within the for loop uses string interpolation for the usage of both inherited classes of rectangle and square from the super class of shape, and given this, both inherited classes are of dynamically set to the datatype shape given the context for what they are operated on via polymorphism upon accessing them within the array of myShape.
+
 
 ## Question 6
 
@@ -109,11 +206,16 @@ let distanceBetweenTwoPoints = sqrt(horizontalDistance * horizontalDistance + ve
 `sqrt` is a method in Swift that gives the square root.  Make sure to have `import Foundation` or `import UIKit` to use this method.
 
 ```swift
+import Foundation
+
 struct Point {
     let x: Double
     let y: Double
     func distance(to point: Point) -> Double {
       //Code in your answer here
+      let horizDis = self.x - point.x
+      let vertDis = self.y - point.y
+      return sqrt(horiz * horiz + vertDis * vertDis)
     }
 }
 
@@ -130,6 +232,13 @@ b. Given the above Point object, and Circle object below, add a `contains` metho
 struct Circle {
     let radius: Double
     let center: Point
+    func contains(_ point:Point) -> Bool {
+        if center.distance(to: point) == radius {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 let pointOne = Point(x: 0, y: 0)
@@ -143,6 +252,27 @@ circleOne.contains(pointFour) //true
 ```
 
 c. Add another method to `Circle` that returns a random point on the circle
+
+```swift
+struct Circle {
+    let radius: Double
+    let center: Point
+    func contains(_ point:Point) -> Bool {
+        if center.distance(to: point) == radius {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getRandomPoint() -> Point {
+        let x = Double.random(in: -radius...radius)
+        let y = sqrt((radius * radius) - (x * x))
+        let point = Point(x: x, y: y)
+        return point
+    }
+}
+```
 
 Hint: Given the radius of a circle and the x value of a point on the circle, the y value of the point is defined by:
 
