@@ -289,9 +289,32 @@ circleOne.contains(circleOne.getRandomPoint()) //Should always be true
 
 a. Create a struct called HangmanModel with 3 properties `targetWord: String`, `numberOfIncorrectGuesses: Int` and `guessedLetters: [Character]`.
 
+```
+struct HangmanModel {
+    var targetWord: String
+    var numberOfIncorrectGuesses: Int
+    var guessedLetters: [Character]
+}
+```
+
 b. Add a method called `playerWon` that returns whether all of the characters in `targetWord` are in `guessedLetters`
 
 ```swift
+
+struct HangmanModel {
+    var targetWord: String
+    var numberOfIncorrectGuesses: Int
+    var guessedLetters: [Character]
+    func playerWon () -> Bool {
+    for char in targetWord {
+        if guessedLetters.contains(char){
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
 var model = HangmanModel()
 model.targetWord = "hello"
 model.guessedLetters = ["h","e","o","l"]
