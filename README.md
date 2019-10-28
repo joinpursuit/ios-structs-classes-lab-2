@@ -289,7 +289,7 @@ circleOne.contains(circleOne.getRandomPoint()) //Should always be true
 
 a. Create a struct called HangmanModel with 3 properties `targetWord: String`, `numberOfIncorrectGuesses: Int` and `guessedLetters: [Character]`.
 
-```
+```swift
 struct HangmanModel {
     var targetWord: String
     var numberOfIncorrectGuesses: Int
@@ -300,7 +300,6 @@ struct HangmanModel {
 b. Add a method called `playerWon` that returns whether all of the characters in `targetWord` are in `guessedLetters`
 
 ```swift
-
 struct HangmanModel {
     var targetWord: String
     var numberOfIncorrectGuesses: Int
@@ -324,6 +323,32 @@ model.playerWon //true
 c. Add a method called `printDisplayVersionOfWord` that prints the `targetWord` replacing characters that are not in `guessedLetters` with "\_"
 
 ```
+struct HangmanModel {
+    var targetWord: String = ""
+    var numberOfIncorrectGuesses: Int = 0
+    var guessedLetters: [Character] = []
+    func playerWon () -> Bool {
+        var contain = false
+        for char in targetWord {
+            if guessedLetters.contains(char){
+                contain = true
+            } else {
+                contain = false
+            }
+        }
+        return contain
+    }
+    func printDisplayVersionOfWord () {
+        for char in targetWord {
+            if guessedLetters.contains(char) {
+                print(char)
+            } else {
+                print("_")
+            }
+        }
+    }
+}
+
 var model = HangmanModel()
 model.targetWord = "hello"
 model.guessedLetters = ["h","l"]
@@ -334,6 +359,39 @@ model.printDisplayVersionOfWord
 d. Add a method called `guess(_:)` that takes in a character as input, and updates `guessedLetters` and `numberOfIncorrectGuesses` as appropriate.
 
 ```swift
+struct HangmanModel {
+    var targetWord: String = ""
+    var numberOfIncorrectGuesses: Int = 0
+    var guessedLetters: [Character] = []
+    func playerWon () -> Bool {
+        var contain = false
+        for char in targetWord {
+            if guessedLetters.contains(char){
+                contain = true
+            } else {
+                contain = false
+            }
+        }
+        return contain
+    }
+    func printDisplayVersionOfWord () {
+        for char in targetWord {
+            if guessedLetters.contains(char) {
+                print(char)
+            } else {
+                print("_")
+            }
+        }
+    }
+    mutating func guess (_ userInput: Character) {
+        if targetWord.contains(userInput) {
+            guessedLetters.append(userInput)
+        } else {
+            numberOfIncorrectGuesses += 1
+        }
+    }
+}
+
 var model = HangmanModel()
 model.targetWord = "hello"
 model.guess("h")
@@ -343,3 +401,45 @@ model.numberOfIncorrectGuesses // 1
 ```
 
 e. Have `guess(_:)` also print out the current display version of the word, the number of incorrect guesses and if the player has won.
+
+```swift
+struct HangmanModel {
+    var targetWord: String = ""
+    var numberOfIncorrectGuesses: Int = 0
+    var guessedLetters: [Character] = []
+    func playerWon () -> Bool {
+        var contain = false
+        for char in targetWord {
+            if guessedLetters.contains(char){
+                contain = true
+            } else {
+                contain = false
+            }
+        }
+        return contain
+    }
+    func printDisplayVersionOfWord () {
+        for char in targetWord {
+            if guessedLetters.contains(char) {
+                print(char)
+            } else {
+                print("_")
+            }
+        }
+    }
+    mutating func guess (_ userInput: Character) {
+        if targetWord.contains(userInput) {
+            guessedLetters.append(userInput)
+        } else {
+            numberOfIncorrectGuesses += 1
+        }
+        printDisplayVersionOfWord()
+        print("Number of incorrect guesses:", numberOfIncorrectGuesses)
+        if playerWon() == true {
+            print("You've won")
+        } else {
+            print("You've lost")
+        }
+    }
+}
+```
